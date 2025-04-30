@@ -1,12 +1,13 @@
-# Prototyping-Team-A3-
-# To Do LIst within 22nd April
-Md Akram Tasks
-1. Make accurate mesurement of the connection of motor of John design. 
-2. How to connect servo, Ultrasonic sensor, Motor driver and Ir sensor with main surface
+# Line Follower RC Car with Obstacle Detection
 
+This project focuses on building a smart **line-following RC car** that autonomously navigates along a track while avoiding obstacles in its path. The car uses a combination of **ultrasonic sensors**, **IR sensors**, **servo motors**, and **motor drivers** to follow a designated line and actively detect and avoid obstacles.
 
+## Key Components:
+- **IR Sensors**: Used to detect the line and keep the car on track.
+- **Ultrasonic Sensor**: Detects obstacles in the car's path, enabling it to avoid collisions.
+- **Servo Motors**: Control the movement of the car, ensuring smooth navigation along the line.
 
-John Tasks. 
+### Goal:
+The main objective of this project is to integrate these components into a cohesive system that not only follows the line but also reacts to its environment by avoiding obstacles. This makes the project a great introduction to robotics and autonomous systems.
 
-1. System engineering task 
-2. Thinker CAD simulation. 
+---
