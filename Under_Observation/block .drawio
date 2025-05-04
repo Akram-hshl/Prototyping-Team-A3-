@@ -1,0 +1,45 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0" version="26.2.14">
+  <diagram name="Page-1" id="fjCtMSEt0NRo-HTROu4k">
+    <mxGraphModel dx="1668" dy="925" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="5" target="gKeqFcQBrmmW3bYFSfIw-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="IR sensors" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FF9999;" parent="1" vertex="1">
+          <mxGeometry x="100" y="420" width="126" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="9" target="gKeqFcQBrmmW3bYFSfIw-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9" value="Ultrasonic Sensor" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FF9999;" parent="1" vertex="1">
+          <mxGeometry x="100" y="550" width="126" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-22" value="Arduino Uno" style="whiteSpace=wrap;strokeWidth=2;fontStyle=1;fillColor=#9999FF;" vertex="1" parent="1">
+          <mxGeometry x="335" y="460" width="180" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="gKeqFcQBrmmW3bYFSfIw-23">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="353" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="gKeqFcQBrmmW3bYFSfIw-23" target="gKeqFcQBrmmW3bYFSfIw-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="gKeqFcQBrmmW3bYFSfIw-23" target="gKeqFcQBrmmW3bYFSfIw-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-23" value="Motor Driver" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFFF99;" vertex="1" parent="1">
+          <mxGeometry x="350" y="640" width="126" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-26" value="Motor Left" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFFF99;" vertex="1" parent="1">
+          <mxGeometry x="630" y="680" width="126" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="gKeqFcQBrmmW3bYFSfIw-29" value="Motor Right" style="whiteSpace=wrap;strokeWidth=2;fillColor=#FFFF99;" vertex="1" parent="1">
+          <mxGeometry x="630" y="560" width="126" height="54" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
