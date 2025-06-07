@@ -33,7 +33,7 @@ void loop() {
   int leftSensor = digitalRead(L_S);
   int rightSensor = digitalRead(R_S);
 
-  // Optional: print sensor status
+  // print sensor status
   Serial.print("Left Sensor: ");
   Serial.print(leftSensor);
   Serial.print(" | Right Sensor: ");
