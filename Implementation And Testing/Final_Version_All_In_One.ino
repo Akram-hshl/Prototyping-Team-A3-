@@ -21,11 +21,6 @@ const int echoPin = 12;
 #define S3_PIN A1
 #define OUT_PIN A0
 
-// Optional if you want to control LED and OE via code
-//#define OE_PIN  7
-//#define LED_PIN 6
-
-
 // Speed settings
 const int speedL = 55;
 const int speedR = 50;
