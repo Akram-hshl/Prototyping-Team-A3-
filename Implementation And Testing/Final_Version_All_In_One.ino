@@ -82,12 +82,12 @@ void loop() {
       delay(1000);
       int color = getColor();
       if (color == 1) {
-        avoidObstacle();
+        ParkCar(); //red = 1 park
       } else if (color == 2) {
-        push();
-        //3 Green 2 blue
+        avoidObstacle();
+        // 2 = blue aboidobstacle
       } else if (color == 3) {
-        ParkCar(); //3 Green
+        push(); // Green = 3 push
       }
       //avoidObstacle();
       //rejoinLine();
@@ -306,8 +306,7 @@ void Stop() {
   digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
 }
 void push(){
-  // 2 blue 
-  //2 push
+  // 2 blue aboidobsticles
   pforward();
   delay(500); //need to adjust
   Stop();
@@ -315,8 +314,7 @@ void push(){
   
 }
 void ParkCar() {
-  // 3 Green 
-  //3 park
+  // 3 Green push
   aturnRight();
   delay(300); //changed from 800
   Stop();
