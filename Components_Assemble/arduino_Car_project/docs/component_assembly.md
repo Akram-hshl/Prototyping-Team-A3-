@@ -15,7 +15,7 @@ This log records the physical setup and wiring of components for our robot durin
 | **IR Sensors (x2)** | Left sensor to A0, Right sensor to A1 |
 | **Servo Motor**    | Signal connected to D11, powered using external 5V |
 | **Color Sensor (TCS3200)** | S0–S3 connected to D2–D5, OUT pin to D12 |
-| **Power Supply** | 7.4V Li-ion battery to 5V voltage regulator, which powers the Arduino and sensors. All GNDs are linked. |
+| **Power Supply** | 9V Li-ion battery to 5V voltage regulator, which powers the Arduino and sensors. All GNDs are linked. |
 
 ## What Was Done  
 - All components were mounted on the chassis or breadboard.
