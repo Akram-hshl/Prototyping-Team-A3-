@@ -1,0 +1,269 @@
+const uint8_t speedLineLeft     = 55;
+const uint8_t speedLineRight    = 50;
+const uint8_t speedAlignLeft    = 75;
+const uint8_t speedAlignRight   = 70;
+const uint8_t speedPushLeft     = 120;
+const uint8_t speedPushRight    = 120;
+
+#define IN1 8
+#define IN2 9
+#define ENA 3
+#define IN3 10
+#define IN4 11
+#define ENB 5
+
+#define SERVO_PIN A5
+const uint8_t lineSensorLeft    = 2;
+const uint8_t lineSensorRight   = 4;
+
+#define COLOR_SENSOR_OUT A0
+#define COLOR_SENSOR_S0 A1
+#define COLOR_SENSOR_S1 A2
+#define COLOR_SENSOR_S2 A3
+#define COLOR_SENSOR_S3 A4
+
+const uint8_t obstacleThreshold = 5;
+uint16_t distanceFront = 0;
+
+void setup() {
+  pinMode(L_S, INPUT);
+  pinMode(R_S, INPUT);
+
+  pinMode(ENA, OUTPUT); pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  pinMode(ENB, OUTPUT); pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(servo, OUTPUT);
+  pinMode(S0_PIN, OUTPUT);
+  pinMode(S1_PIN, OUTPUT);
+  pinMode(S2_PIN, OUTPUT);
+  pinMode(S3_PIN, OUTPUT);
+  pinMode(OUT_PIN, INPUT);
+
+  digitalWrite(S0_PIN, HIGH);
+  digitalWrite(S1_PIN, LOW);
+
+  // Initialize servo to face forward
+  servoPulse(servo, 70);
+  Serial.begin(9600);
+  delay(1000);
+}
+
+void loop() {
+  distance_F = Ultrasonic_read();
+  Serial.print("Distance Forward = ");
+  Serial.print(distance_F);
+  Serial.println(" cm");
+
+  int leftSensor = digitalRead(L_S);
+  int rightSensor = digitalRead(R_S);
+  int sensorState = leftSensor * 2 + rightSensor;
+
+  switch (sensorState) {
+    case 0: // Both sensors on line
+      if (distance_F > Set) {
+        forward();
+      } else {
+        Stop();
+        delay(1000);
+        int color = getColor();
+        switch (color) {
+          case 1:
+            avoidObstacle();  // Red
+            break;
+          case 2:
+            push();           // Blue
+            break;
+          case 3:
+            ParkCar();        // Green
+            break;
+          default:
+            Stop();           // Unknown color
+            break;
+        }
+      }
+      break;
+
+    case 1: // Left = 0, Right = 1 → turnRight
+      turnRight();
+      break;
+
+    case 2: // Left = 1, Right = 0 → turnLeft
+      turnLeft();
+      break;
+
+    case 3: // Both sensors off line
+      Stop();
+      break;
+  }
+
+  delay(10);
+}
+
+void avoidObstacle() {
+  int distance_Left = 0;
+  int distance_Right = 0;
+  Stop();
+  delay(500);
+
+  for (int angle = 70; angle >= 0; angle -= 5) {
+    servoPulse(servo, angle);
+  }
+  delay(500);
+  distance_Right = Ultrasonic_read();
+  Serial.print("Right Distance: ");
+  Serial.println(distance_Right);
+  delay(100);
+
+  if (distance_Right > Set) {
+    aturnRight(); delay(300); Stop(); delay(1000);
+    for (int angle = 0; angle <= 70; angle += 5) {
+      servoPulse(servo, angle);
+    }
+    aforward(); delay(800); Stop(); delay(1000);
+    aturnLeft(); delay(300); Stop(); delay(300);
+  } else {
+    for (int angle = 70; angle <= 140; angle += 5) {
+      servoPulse(servo, angle);
+    }
+    delay(500);
+    distance_Left = Ultrasonic_read();
+    Serial.print("Left Distance: ");
+    Serial.println(distance_Left);
+    delay(100);
+
+    if (distance_Left > Set) {
+      aturnLeft(); delay(300); Stop(); delay(1000);
+      for (int angle = 140; angle >= 70; angle -= 5) {
+        servoPulse(servo, angle);
+      }
+      aforward(); delay(600); Stop(); delay(1000);
+      aturnRight(); delay(400); Stop(); delay(300);
+    }
+  }
+}
+
+int Ultrasonic_read() {
+  digitalWrite(trigPin, LOW); 
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH); 
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, 30000);
+  if (duration == 0) return 999;
+
+  return duration / 29 / 2;
+}
+
+void servoPulse(int pin, int angle) {
+  int pwm = (angle * 11) + 500;
+  digitalWrite(pin, HIGH);
+  delayMicroseconds(pwm);
+  digitalWrite(pin, LOW);
+  delay(20);
+}
+
+int getColor() {
+  int redValue, greenValue, blueValue;
+
+  // Red
+  digitalWrite(S2_PIN, LOW);
+  digitalWrite(S3_PIN, LOW);
+  redValue = pulseIn(OUT_PIN, LOW);
+
+  // Green
+  digitalWrite(S2_PIN, HIGH);
+  digitalWrite(S3_PIN, HIGH);
+  greenValue = pulseIn(OUT_PIN, LOW);
+
+  // Blue
+  digitalWrite(S2_PIN, LOW);
+  digitalWrite(S3_PIN, HIGH);
+  blueValue = pulseIn(OUT_PIN, LOW);
+
+  Serial.print("Red: ");
+  Serial.print(redValue);
+  Serial.print("\tGreen: ");
+  Serial.print(greenValue);
+  Serial.print("\tBlue: ");
+  Serial.println(blueValue);
+
+  int minValue = min(redValue, min(greenValue, blueValue));
+
+  if (minValue == redValue) {
+    return 1; // Red
+  } else if (minValue == blueValue) {
+    return 2; // Blue
+  } else if (minValue == greenValue) {
+    return 3; // Green
+  } else {
+    return 0;
+  }
+}
+
+// Movement functions
+void forward() {
+  analogWrite(ENA, speedL); analogWrite(ENB, speedR);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+}
+
+void aforward() {
+  analogWrite(ENA, speedLa); analogWrite(ENB, speedRa);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+}
+
+void pforward() {
+  analogWrite(ENA, speedLp); analogWrite(ENB, speedRp);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+}
+
+void backward() {
+  analogWrite(ENA, speedL); analogWrite(ENB, speedR);
+  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
+}
+
+void turnRight() {
+  analogWrite(ENA, speedL); analogWrite(ENB, speedR);
+  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+}
+
+void aturnRight() {
+  analogWrite(ENA, speedLa); analogWrite(ENB, speedRa);
+  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
+}
+
+void turnLeft() {
+  analogWrite(ENA, speedL); analogWrite(ENB, speedR);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
+}
+
+void aturnLeft() {
+  analogWrite(ENA, speedLa); analogWrite(ENB, speedRa);
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
+}
+
+void Stop() {
+  analogWrite(ENA, 0); analogWrite(ENB, 0);
+  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
+}
+
+void push() {
+  pforward(); delay(500);
+  Stop(); delay(500);
+}
+
+void ParkCar() {
+  aturnRight(); delay(300); Stop(); delay(1000);
+  backward(); delay(5000);
+}
